@@ -10,12 +10,12 @@ import { model } from "@tensorflow/tfjs";
 
 function MLmodel() {
   const NLayers = 3;
-  const NNeurons = [4, 8, 1];
+  const NNeurons = [4, 12, 1];
   const Activations = ["relu", "sigmoid"];
   const [isPlaying, setIsPlaying] = useState(false);
   const [layerData, setLayerData] = useState([]);
   const [neuronHistory, setNeuronHistory] = useState([]);
-  const [hoveredNode, setHoveredNode] = useState(null);
+  const [hoveredNode, setHoveredNode] = useState([1,0]);
   const [weightHistory, setWeightHistory] = useState([]);
   const [accuracyHistory, setAccuracyHistory] = useState([]);
   const canvasRef = useRef(null);
@@ -121,7 +121,7 @@ function MLmodel() {
           neuronPositions[i + 1].forEach((n2, k) => {
             const weight = weights[j]?.[k] ?? 0;
             const intensity = Math.min(255, Math.max(0, Math.floor((weight + 1) * 128)));
-            ctx.strokeStyle = `rgb(${intensity}, ${255 - intensity}, 150)`;
+            ctx.strokeStyle = `rgb(${255-intensity}, ${intensity}, 128)`;
             ctx.beginPath();
             ctx.moveTo(n1.x, n1.y);
             ctx.lineTo(n2.x, n2.y);
@@ -174,7 +174,8 @@ function MLmodel() {
 
       <div className="grid grid-cols-2 justify-center items-center h-[70vh] w-full mt-10 bg-white">
         
-        <div ref={containerRef} className="relative flex-none justify-center items-center h-[70vh] w-full mt-10 bg-white">
+        <div ref={containerRef} className="relative flex-none justify-center items-center h-[100%vh] w-full mt-10 bg-white">
+
             <div className="absolute top-2 left-2 z-20">
                 <PlayPauseButton isPlaying={isPlaying} onToggle={handlePlayPause} />
                 

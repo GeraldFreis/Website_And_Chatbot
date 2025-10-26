@@ -21,8 +21,18 @@ function PlottingAccuracy({ accuracyHistory }) {
 
     const layout = {
       title: { text: "Model Accuracy over Epochs", x: 0.5 },
-      xaxis: { title: "Epoch" },
-      yaxis: { title: "Accuracy", range: [0, 1] },
+      xaxis: {
+        title: {
+          text: "Epoch",   // <--- correct property
+          font: { size: 12, family: 'Arial, sans-serif', color: 'black' }
+        }
+      },
+      yaxis: {
+        title: {
+          text: "Accuracy",   // <--- correct property
+          font: { size: 12, family: 'Arial, sans-serif', color: 'black' }
+        },
+      },
       margin: { t: 40, r: 20, l: 50, b: 40 },
     };
 
@@ -32,7 +42,7 @@ function PlottingAccuracy({ accuracyHistory }) {
   return (
     <div
       ref={chartRef}
-      className="flex-none w-full h-96 bg-white rounded-lg shadow-lg p-4 mx-auto max-w-[33.33vw]"
+      className="flex-none w-full h-60 bg-white rounded-lg shadow-lg p-2 mx-auto max-w-[25vw]"
     ></div>
   );
 }

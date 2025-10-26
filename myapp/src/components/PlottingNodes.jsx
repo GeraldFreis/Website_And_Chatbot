@@ -5,11 +5,11 @@ function PlottingNodes({ nodeHistory, specifiedNode }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
-    if (!specifiedNode || nodeHistory.length === 0) return;
+    // if (!specifiedNode || nodeHistory.length === 0) return;
 
-    const [layerIdx, neuronIdx] = specifiedNode;
-    const yVals = [...Array(nodeHistory.length).keys()];
-    const nodeValues = nodeHistory.map(epoch => epoch[layerIdx][neuronIdx]);
+    const [layerIdx, neuronIdx] = specifiedNode || [1,0];
+    const yVals = nodeHistory.length ? [...Array(nodeHistory.length).keys()] : [0];
+    const nodeValues = nodeHistory.length ? nodeHistory.map(epoch => epoch[layerIdx][neuronIdx]) : [0];
 
     const trace = {
       x: yVals,
@@ -21,28 +21,21 @@ function PlottingNodes({ nodeHistory, specifiedNode }) {
     };
 
     const layout = {
-      title: {text: `Neuron Bias over Epochs`,
-      font: {
-        family: 'Arial, sans-serif',
-        size: 20,
-        color: 'black'
-      },
-      xref: 'paper',
-      x: 0.5,   // centers the title horizontally
-      xanchor: 'center'
-    },
-        xaxis: {
+      title: {text: `Neuron Bias over Epochs for node [${layerIdx}, ${neuronIdx}]`, x: 0.5},
+      xaxis: {
         title: {
           text: "Epoch",   // <--- correct property
-          font: { size: 16, family: 'Arial, sans-serif', color: 'black' }
+          font: { size: 12, family: 'Arial, sans-serif', color: 'black' }
         }
       },
       yaxis: {
         title: {
           text: "Bias Value",   // <--- correct property
-          font: { size: 16, family: 'Arial, sans-serif', color: 'black' }
+          font: { size: 12, family: 'Arial, sans-serif', color: 'black' }
         },
-    }
+    },
+    margin: { t: 40, r: 20, l: 50, b: 40 },
+
     };
 
     Plotly.newPlot(chartRef.current, [trace], layout);
@@ -52,7 +45,7 @@ function PlottingNodes({ nodeHistory, specifiedNode }) {
   return (
     <div
       ref={chartRef}
-      className="flex-none w-full h-96 bg-white rounded-lg shadow-lg p-4 mx-auto max-w-[33.33vw]"
+      className="flex-none w-full h-60 bg-white rounded-lg shadow-lg p-2 mx-auto max-w-[25vw]"
     ></div>
   );
 }
